@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'investments/css/investment_form.css' %}">
+
+<div class="container mt-5">
+  <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'product_list' %}" class="btn btn-outline-primary">Catalogo de Investimento</a>
+  </div>
+    <h2 class="text-center mb-4">Contratar Produto: {{ product.name }}</h2>
+    
+    <div class="card bg-dark text-light p-4">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-warning btn-lg">Investir</button>
+            </div>
+        </form>
+        
+        {% if messages %}
+            <ul class="mt-4 list-unstyled">
+                {% for message in messages %}
+                    <li class="text-warning">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

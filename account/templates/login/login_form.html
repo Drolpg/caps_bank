@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block content %}
+<div class="form-container">
+  <img src="{% static 'images/logo.png' %}" alt="Teste" class="d-block mx-auto mb-4" width="100">
+  <h2>Login</h2>
+  <form method="post" action="">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      {{ form.email }}
+    </div>
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
+      {{ form.password }}
+    </div>
+    <button type="submit" class="btn btn-login w-100 mb-4">Login</button>
+  </form>
+  <div class="links">
+    <a href="{% url 'register' %}"
+      class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover "> Cadastre-se</a>
+    <a href="{% url 'password-recovery' %}"
+      class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ml-10">Esqueceu a senha?</a>
+  </div>
+{% endblock %}

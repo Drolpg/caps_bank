@@ -1,0 +1,20 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - echo "$EC2_KEY" > ec2_key.pem
+
+    - chmod 600 ec2_key.pem
+    - echo "$ENV" > .env
+
+
+    - scp -o StrictHostKeyChecking=no -i ec2_key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/app/
+    - ssh -o StrictHostKeyChecking=no -i ec2_key.pem $EC2_USER@$EC2_HOST "sudo chown -R ubuntu:ubuntu /home/ubuntu/app && sudo chmod -R 775 /home/ubuntu/app"
+
+
+    # Executar comandos SSH sem usar EOF
+    - ssh -o StrictHostKeyChecking=no -i ec2_key.pem $EC2_USER@$EC2_HOST "cd /home/ubuntu/app/ && docker compose down && docker compose up -d"
+  only:
+    - develop

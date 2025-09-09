@@ -1,0 +1,88 @@
+.extract {
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    border-bottom: 1px solid #fff;
+}
+
+.text-title {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 10px;
+}
+
+.timeline {
+    position: relative;
+    padding: 20px 0;
+
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 25px;
+    width: 2px;
+    height: 100%;
+    background-color: #fff;
+}
+
+.date-section {
+    font-weight: bold;
+    color: #fff;
+    margin: 20px 0 10px 60px;
+}
+
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding-left: 60px;
+}
+
+.timeline-icon {
+    position: absolute;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+}
+
+.timeline-icon img.icon {
+    width: 24px;
+    height: 24px;
+}
+
+.timeline-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.timeline-content {
+    flex-grow: 1;
+    padding: 15px;
+    background-color: #222;
+    border-radius: 8px;
+    border: 1px solid #fff;
+}
+
+.amount {
+    font-size: 1.2em;
+}
+
+.empty-extract {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}

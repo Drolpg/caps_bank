@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Token para confirmação da transferência</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333;">
+    <h2>Confirmação de Transferência</h2>
+    <p>Olá, {{ from_account.username }}!</p>
+    <p>Seu token de confirmação é: <strong>{{ token }}</strong></p>
+    <p>Esse token expira às <strong>{{ token_expiration }}</strong>.</p>
+    <p>Utilize esse código para confirmar sua transação.</p>
+</body>
+</html>

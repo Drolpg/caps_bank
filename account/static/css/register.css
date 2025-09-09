@@ -1,0 +1,19 @@
+.form-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: rgb(23, 25, 28);
+    box-shadow: 0px 2px 4px black;
+    border-radius: 8px;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.btn-cadastrar {
+    background-color: #1a73e8;
+    color: #fff;
+    border: none;
+}

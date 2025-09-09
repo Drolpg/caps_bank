@@ -1,0 +1,10 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+    <img class="logo" src="{% static 'images/logo.png' %}" />   
+{% endblock %}

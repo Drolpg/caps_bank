@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'investments/css/product_detail.css' %}">
+
+  <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'product_list' %}" class="btn btn-outline-primary">Catalogo de Investimento</a>
+  </div>
+    <h2 class="text-center mb-4">{{ product.name }}</h2>
+    <p class="text-center ">Informações detalhadas sobre este produto de investimento.</p>
+    <p class="text-center ">Os rendimentos deste produto é calculado com juros compostos diários, garantindo ganhos progressivos a partir de uma taxa base anual competitiva.</p>
+    
+    
+    <div class="card bg-dark text-light p-4 text-center">
+        <p><strong>Taxa anual base:</strong> {{ product.get_monthly_tax |floatformat:2 }}%</p>
+        <p><strong>Taxa Indexador anual:</strong> {{ product.indexer.name }}: {{ product.indexer.rate |floatformat:2 }}%</p>
+        <p><strong>Taxa administrativa anual:</strong> {{ product.tax |floatformat:2 }}%</p>
+        <p><strong>Valor Mínimo:</strong> {{ product.minimum_value |floatformat:2 }}</p>
+        <p><strong>Data de Início:</strong> {{ product.start_date |date:"d/m/Y" }}</p>
+        <p><strong>Validade:</strong> {{ product.final_date |date:"d/m/Y" }}</p>
+        
+        <div class="text-center mt-4">
+            {% if product.is_premium and user.type == "premium" or user.type == "admin" %}
+                <a href="{% url 'investment_create' product.id %}" class="btn btn-warning btn-lg">Contratar este Produto</a>
+            {% elif not product.is_premium %}
+                <a href="{% url 'investment_create' product.id %}" class="btn btn-warning btn-lg">Contratar este Produto</a>
+            {% else %}
+                <p class="text-warning">Este produto é premium e só pode ser contratado por usuários premium.</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

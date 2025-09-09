@@ -1,0 +1,134 @@
+/* Container principal */
+.container {
+    padding: 20px;
+}
+
+/* Título e subtítulo */
+h2 {
+    color: silver;
+    font-weight: bold;
+}
+
+p {
+    color: #6c757d;
+    margin-top: -10px;
+    font-size: 0.95rem;
+}
+
+/* Estilo dos filtros */
+form .form-control, form .form-select {
+    border: 1px solid #525252;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+form .form-control:focus, form .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+form .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+form .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Tabela de investimentos */
+.table-responsive {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table thead {
+    background-color: #111111;
+}
+
+.table th {
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+.table td {
+    font-size: 0.925rem;
+    color: #212529;
+}
+
+/* Botão de Ações */
+.btn-warning {
+    color: #ffffff;
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-warning:hover {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Mensagem para 'sem investimentos' */
+.table .text-center {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Responsividade */
+
+/* Telas médias - Tablets e desktops pequenos */
+@media (min-width: 768px) and (max-width: 991px) {
+    .table th, .table td {
+        font-size: 0.875rem;
+    }
+
+    form .col-md-2 {
+        flex: 1 1 48%;
+        max-width: 48%;
+    }
+}
+
+/* Telas pequenas - Smartphones */
+@media (max-width: 767px) {
+    .table th, .table td {
+        font-size: 0.8rem;
+    }
+
+    form .col-md-2 {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Telas muito pequenas - Smartphones menores */
+@media (max-width: 576px) {
+    
+
+    .table th, .table td {
+        font-size: 0.50rem;
+    }
+
+    .btn-lg {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+    }
+}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Transferências realizadas{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/completed_transactions.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="history-container">
+        <h1 class="history-title">Histórico de Transferências Realizadas</h1>
+        <div class="transaction-history">
+            {% for transaction in transactions %}
+                <div class="transaction-item">
+                    <img src="{% static 'images/transaction.png' %}" alt="Ícone de Transferência">
+                    <div>
+                        <p><strong>Data:</strong> {{ transaction.timestamp }}</p>
+                        <p class="amount text-danger">
+                            <strong>Valor:</strong> R$ {{ transaction.amount }}
+                        </p>
+                        <p><strong>Destino:</strong> {{ transaction.to_account }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="empty-transfers">Nenhuma transferência realizada ainda.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

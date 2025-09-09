@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block links %}
+{% endblock %}
+
+{% block navbar-content%}
+<h1 class="navbar-text text-light" style="font-family: 'Lora', serif;">
+  Bank CAPS
+</h1>
+<h5 class="navbar-text text-light" style="font-family: 'Lora', serif;">
+  Rentabilidade sem perder a cabeça.
+</h5>
+
+{% endblock %}
+{% block content %}
+
+  <div class="balance-box">
+    <span>Saldo em Conta: <span id="saldo-valor">R$ {{ balance }}</span></span>
+    <button id="toggle-visibility" class="toggle-visibility" onclick="toggleSaldo()">👁️</button>
+  </div>
+
+  <div class="options">
+    <a href="{% url 'extract' %}">Extrato</a>
+
+    <div class="accordion w-100" id="transferAccordion">
+        <a id="transferToggle" class="collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTransfer" aria-expanded="false" aria-controls="collapseTransfer">
+            Transferência
+        </a>
+      <div id="collapseTransfer" class="accordion-collapse collapse" aria-labelledby="headingTransfer" data-bs-parent="#transferAccordion">
+        <div class="accordion-body d-flex flex-column">
+          <a href="{% url 'completed-transactions' %}">Transferências Realizadas</a>
+          <a href="{% url 'transaction' %}" id="novaTransferenciaBtn">Nova Transferência</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion w-100" id="investAccordion">
+        <a id="investToggle" class="collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInvest" aria-expanded="false" aria-controls="collapseInvest">
+            Investimentos
+        </a>
+      <div id="collapseInvest" class="accordion-collapse collapse" aria-labelledby="headingInvest" data-bs-parent="#investAccordion">
+        <div class="accordion-body d-flex flex-column">
+          <a href="{% url 'my_investments' %}">Meus Investimentos</a>
+          <a href="{% url 'product_list' %}">Novo Investimento</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleSaldo() {
+      const saldoValor = document.getElementById('saldo-valor');
+      const toggleButton = document.getElementById('toggle-visibility');
+      if (saldoValor.style.display === 'none') {
+        saldoValor.style.display = 'inline';
+        toggleButton.textContent = '👁️';
+      } else {
+        saldoValor.style.display = 'none';
+        toggleButton.textContent = '👁️‍🗨️';
+      }
+    }
+
+  </script>
+{% endblock %}

@@ -1,0 +1,25 @@
+services:
+  web:
+    build: . 
+    container_name: django_web
+    ports:
+      - "80:8000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    networks:
+      - private_network  
+    volumes:
+      - .:/work              
+      - ./db.sqlite3:/work/db.sqlite3 
+
+  redis:
+    image: redis:latest
+    container_name: redis_server
+    networks:
+      - private_network
+
+networks:
+  private_network:
+    driver: bridge

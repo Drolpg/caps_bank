@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Confirmar transação{% endblock %}
+
+{% block content %}
+<style>
+    .modal-content {
+        padding: 20px;
+        width: 90%;
+        max-width: 400px;
+        margin: auto;
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    label {
+        margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+        width: 60%;
+        max-width: 300px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .back-link {
+        display: block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="modal-content">
+    <h1>Confirmar Transação</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="token">Digite o token recebido:</label>
+        <input type="text" id="token" name="token" required>
+        <button type="submit">Confirmar transferência</button>
+    </form>
+
+    {% if error %}
+        <p class="amount text-danger">{{ error }}</p>
+    {% endif %}
+
+
+    <a href="{% url 'home' %}" class="back-link">Voltar para a página inicial</a>
+</div>
+{% endblock %}

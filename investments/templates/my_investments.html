@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'investments/css/my_investments.css' %}">
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'product_list' %}" class="btn btn-outline-primary">Produtos de Investimento</a>
+    </div>
+    <h2 class="text-center mb-4">Meus Investimentos</h2>
+    <p class="text-center">Visualize e acompanhe o desempenho dos seus investimentos em um só lugar, com filtros para facilitar o controle do seu portfólio.</p>
+
+    <!-- Filtros -->
+    <form method="GET" action=".">
+        <div class="row g-3 mb-3">
+            <div class="col-md-2">
+                <input type="number" name="min_applied_value" class="form-control" placeholder="Valor Aplicado Mín." value="{{ request.GET.min_applied_value }}">
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="min_income" class="form-control" placeholder="Rendimento Mín." value="{{ request.GET.min_income }}">
+            </div>
+            <div class="col-md-2">
+                <select name="status" class="form-select">
+                    <option value="">Todos os Status</option>
+                    <option value="ativo" {% if request.GET.status == "ativo" %}selected{% endif %}>Ativo</option>
+                    <option value="resgatado" {% if request.GET.status == "resgatado" %}selected{% endif %}>Resgatado</option>
+                    <option value="vencido" {% if request.GET.status == "vencido" %}selected{% endif %}>Vencido</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+               <input type="date" name="initial_date" class="form-control" value="{{ request.GET.initial_date }}"> Data de inicio
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="rescue_date" class="form-control" value="{{ request.GET.rescue_date }}">Data de Resgate
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Tabela de Investimentos -->
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-light">Nome do Produto</th>
+                    <th class="text-light">Taxa Base Anual</th>
+                    <th class="text-light">Valor Aplicado</th>
+                    <th class="text-light">Rendimento Acumulado</th>
+                    <th class="text-light">Status</th>
+                    <th class="text-light">Data de Início</th>
+                    <th class="text-light">Data de Resgate</th>
+                    <th class="text-light">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for investment in investments %}
+                    <tr>
+                        <td class="text-light">{{ investment.product.name }}</td>
+                        <td class="text-light">{{ investment.product.get_monthly_tax | floatformat:2 }}%</td>
+                        <td class="text-light">{{ investment.applied_value | floatformat:2 }}</td>
+                        <td class="text-light">{{ investment.accumulated_income | floatformat:2 }}</td>
+                        <td class="text-light">{{ investment.status }}</td>
+                        <td class="text-light">{{ investment.initial_date | date:"d/m/Y" }}</td>
+                        <td class="text-light">{{ investment.rescue_date | date:"d/m/Y" }}</td>
+                        <td class="text-light">
+                            {% if investment.status == 'ativo' %}
+                                <a href="{% url 'myinvestment_rescue' investment.id %}" class="btn btn-warning btn-sm">Resgatar</a>
+                            {% else %}
+                                <span class="text-muted">Resgatado</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center">Você ainda não possui investimentos.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+
+{% endblock %}

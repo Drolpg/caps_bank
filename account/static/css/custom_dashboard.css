@@ -1,0 +1,124 @@
+h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 25px;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1a1a1a;
+    padding: 100px 20px;
+    border: 1px solid #fff;
+    position: relative;
+}
+
+.stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 20px;
+    min-width: 200px;
+    text-align: center;
+}
+
+.stat-item h3, .stat-item h4, .stat-item p {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.active-users, .premium-users {
+    display: flex;
+    flex-direction: column;
+}
+
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 50px;
+}
+
+.button {
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #fff;
+    padding: 40px 20px; 
+    text-align: center;
+    display: inline-block;
+}
+
+@media (min-width: 430px) and (max-width: 850px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .stat-item {
+        padding: 0px;
+        margin: -11px;
+    }
+
+    .button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .button {
+        width: 100%;
+        max-width: 250px;
+        font-size: 0.9em;
+        margin-bottom: 50px;
+    }
+}
+
+@media (min-width: 360px) and (max-width: 429px) {
+    .container {
+        width: 90%;
+        padding: 1%; 
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .stats {
+        display: block;
+    }
+
+    .stat-item {
+        padding: 0px;
+        margin: 10px;
+    }
+
+    .button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .button {
+        width: 100%;
+        max-width: 250px;
+        font-size: 0.9em;
+        margin-bottom: 50px;
+    }
+}

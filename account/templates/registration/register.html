@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cadastro{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <img src="{% static 'images/logo.png' %}" alt="Teste" class="d-block mx-auto mb-4" width="100">
+  <h2>Cadastro</h2>
+  <form method="post" action="">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      {{ form.username }}
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      {{ form.email }}
+    </div>
+    <div class="mb-3">
+      <label for="cpf" class="form-label">CPF</label>
+      {{ form.cpf }}
+    </div>
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
+      {{ form.password }}
+    </div>
+    <div class="mb-3">
+      <label for="confirmar-senha" class="form-label">Confirmar Senha</label>
+      {{ form.confirm_password }}
+    </div>
+    <button type="submit" class="btn btn-cadastrar w-100 mb-4">Cadastrar</button>
+  </form>
+  <a href="{% url 'login' %}"
+    class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"> Já tem conta?
+    Autentique-se</a>
+</div>
+{% endblock %}

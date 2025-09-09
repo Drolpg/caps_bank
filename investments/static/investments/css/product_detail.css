@@ -1,0 +1,103 @@
+/* Container principal */
+.container {
+    padding: 20px;
+}
+
+/* Título e subtítulo */
+h2 {
+    color: silver;
+    font-weight: bold;
+}
+
+p {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+/* Estilos do cartão */
+.card {
+    background-color: #2d2e2e;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #3c3d3d;
+    width: 70%;
+    margin: auto;
+}
+
+.card p {
+    color: #dcdcdc;
+}
+
+.card p strong {
+    color: #cccccc;
+}
+
+/* Botão */
+.btn-warning {
+    color: #ffffff;
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-warning:hover {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.text-warning {
+    color: #ffdd57 !important;
+}
+
+/* Responsividade */
+
+/* Telas grandes */
+@media (min-width: 992px) {
+    .container {
+        max-width: 1000px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 991px) {
+    .card {
+        width: 80%; /* Ajusta a largura do card em tablets */
+    }
+}
+
+/* Smartphones médios e menores */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .card {
+        width: 90%; /* Ocupa quase toda a largura em telas menores */
+        padding: 15px; /* Reduz o padding para telas menores */
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+
+    .btn-lg {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Smartphones pequenos */
+@media (max-width: 576px) {
+    .card {
+        width: 100%; /* Usa toda a largura em telas bem pequenas */
+        padding: 10px;
+    }
+
+    .btn-lg {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+}

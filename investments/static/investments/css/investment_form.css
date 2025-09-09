@@ -1,0 +1,95 @@
+/* Container principal */
+.container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto; /* Centraliza o contêiner horizontalmente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título */
+h2 {
+    color: silver;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Card de formulário */
+.card {
+    background-color: #2d2e2e;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #3c3d3d;
+    width: 70%; /* Garante que o card ocupe toda a largura do contêiner */
+}
+
+.card form p {
+    text-align: center;
+}
+
+.card form p label {
+    color: #cccccc;
+    font-weight: bold;
+}
+
+.card form p input, .card form p select {
+    color: #212529;
+    background-color: #f8f9fa;
+    border: 1px solid #525252;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+    width: 100%; /* Garante que os campos de entrada ocupem toda a largura */
+}
+
+.card form p input:focus, .card form p select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Botão */
+.btn-warning {
+    color: #ffffff;
+    background-color: #0056b3;
+    border-color: #0056b3;
+    width: 100%;
+}
+
+.btn-warning:hover {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Mensagens de erro ou sucesso */
+ul.list-unstyled {
+    color: #ffdd57;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .card form p input, .card form p select {
+        font-size: 0.9rem;
+    }
+
+    .btn-lg {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-lg {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+}

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Você recebeu uma transação!</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333;">
+    <h2>Você recebeu uma transação</h2>
+    <p>Olá, {{ to_account.username }}!</p>
+    <p>Você recebeu R$ {{ amount }} de {{ from_account.username }} (CPF {{ from_account.cpf }}).</p>
+    <p>Obrigado por usar nossos serviços!</p>
+</body>
+</html>

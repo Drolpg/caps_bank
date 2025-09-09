@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Cadastro</title>
+</head>
+<body>
+    <h1>Confirmação de Cadastro</h1>
+    <p>Um e-mail de confirmação foi enviado para o seu endereço de e-mail.</p>
+    <p>Por favor, verifique sua caixa de entrada e clique no link para ativar sua conta.</p>
+    <p>Após a confirmação, você poderá fazer login e acessar sua conta.</p>
+    
+    <p>Se você já confirmou sua conta, pode fazer login agora:</p>
+    <a href="{% url 'login' %}">
+        <button>Ir para Login</button>
+    </a>
+    
+    <p>Obrigado por se cadastrar!</p>
+
+         {% if form.non_field_errors %}
+         <ul>
+             {% for error in form.non_field_errors %}
+                 <li>{{ error }}</li>
+             {% endfor %}
+         </ul>
+     {% endif %}
+ 
+     {% for error in form.username.errors %}
+         <ul>
+             <li>{{ error }}</li>
+         </ul>
+     {% endfor %}
+ 
+     {% for error in form.cpf.errors %}
+         <ul>
+             <li>{{ error }}</li>
+         </ul>
+     {% endfor %}
+ 
+     {% for error in form.email.errors %}
+         <ul>
+             <li>{{ error }}</li>
+         </ul>
+     {% endfor %}
+</body>
+</html>

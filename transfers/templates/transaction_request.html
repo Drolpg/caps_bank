@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Transação{% endblock %}
+<style>
+    .accordion-button {
+        background-color: transparent;
+        /* Set the background to transparent */
+        color: #ffffff;
+        /* Set the text color */
+    }
+
+    .accordion-button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        /* Change this to your desired hover color */
+        color: #ffffff;
+        /* Ensure the text color remains white on hover */
+    }
+
+    /* Optional: Change the active button color */
+    .accordion-button:not(.collapsed) {
+        background-color: rgba(255, 255, 255, 0.2);
+        /* Change to a darker shade when active */
+        color: #ffffff;
+        /* Ensure the text color remains white when active */
+    }
+</style>
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Transferência</h2>
+    <h1 class="text-center">Saldo: $ {{ balance }}</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="transfer-form" id="transferForm">
+                <form action="{% url 'transaction' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="valorInput" class="form-label">Valor a transferir:</label>
+                        {{ form.amount }}
+                    </div>
+
+                    <!-- Accordion for selecting account with dark theme -->
+                    <div class="accordion bg-dark text-light" id="accountAccordion">
+                        <div class="accordion-item bg-dark text-light">
+                            <h2 class="accordion-header" id="headingAccount">
+                                <button class="accordion-button bg-base text-light" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseAccount" aria-expanded="true"
+                                    aria-controls="collapseAccount">
+                                    Transferir para o contato
+                                </button>
+                            </h2>
+                            <div id="collapseAccount" class="accordion-collapse collapse show"
+                                aria-labelledby="headingAccount" data-bs-parent="#accountAccordion">
+                                <div class="accordion-body">
+                                    {{ form.to_account }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item bg-dark text-light">
+                            <h2 class="accordion-header" id="headingNewAccount">
+                                <button class="accordion-button collapsed bg-base text-light" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseNewAccount" aria-expanded="false"
+                                    aria-controls="collapseNewAccount">
+                                    Transferir para nova conta
+                                </button>
+                            </h2>
+                            <div id="collapseNewAccount" class="accordion-collapse collapse"
+                                aria-labelledby="headingNewAccount" data-bs-parent="#accountAccordion">
+                                <div class="accordion-body">
+                                    {{ form.to_account_cpf }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary mt-3 w-100">Realizar Transferência</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

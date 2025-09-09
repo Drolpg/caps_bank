@@ -1,0 +1,59 @@
+.history-container {
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    border-bottom: 1px solid #fff;
+}
+
+.history-title {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    margin-top: -20px ;
+    font-weight: bold;  
+    border-bottom: 1px solid #fff;
+    padding-bottom: 10px;
+}
+
+.transaction-history {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction-item {
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-left: 4px solid #ffffff;
+}
+
+.transaction-item p {
+    margin: 5px 0;
+    font-size: 1em;
+}
+
+.transaction-item p strong {
+    color: #bbb;
+}
+
+
+.empty-transfers {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+.transaction-item img {
+    width: 30px; 
+    height: 30px;
+    margin-right: 10px; 
+    flex-shrink: 0; 
+}
+.transaction-item {
+    display: flex;
+    align-items: center;
+}
