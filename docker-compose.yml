@@ -4,6 +4,7 @@ services:
   api:
     build: .
     container_name: capsbank_api
+    command: /entrypoint.sh
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
