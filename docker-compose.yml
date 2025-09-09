@@ -4,17 +4,44 @@ services:
   api:
     build: .
     container_name: capsbank_api
-    command: /entrypoint.sh
-    volumes:
-      - static_volume:/app/static
-      - media_volume:/app/media
+    command: "api"
     env_file:
       - .env
+    volumes:
+      - .:/app
+      - static_volume:/app/static
+      - media_volume:/app/media
     depends_on:
       - db
       - redis
-    expose:
-      - "8000"
+    ports:
+      - "8000:8000"
+
+  celery:
+    build: .
+    container_name: capsbank_celery
+    command: "celery"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    depends_on:
+      - api
+      - redis
+      - db
+
+  celery-beat:
+    build: .
+    container_name: capsbank_celery_beat
+    command: "celery-beat"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    depends_on:
+      - api
+      - redis
+      - db
 
   db:
     image: postgres:15
@@ -31,34 +58,6 @@ services:
     image: redis:7
     container_name: capsbank_redis
     restart: always
-
-  celery:
-    build: .
-    container_name: capsbank_celery
-    command: celery -A caps_bank worker -l info
-    volumes:
-      - static_volume:/app/static
-      - media_volume:/app/media
-    env_file:
-      - .env
-    depends_on:
-      - api
-      - redis
-      - db
-
-  celery-beat:
-    build: .
-    container_name: capsbank_celery_beat
-    command: celery -A caps_bank beat -l info
-    volumes:
-      - static_volume:/app/static
-      - media_volume:/app/media
-    env_file:
-      - .env
-    depends_on:
-      - api
-      - redis
-      - db
 
   nginx:
     image: nginx:latest
