@@ -10,16 +10,21 @@ run_and_prefix() {
 
 echo "Database Startup"
 echo "====================="
-python manage.py collectstatic --noinput
 python manage.py makemigrations
 python manage.py migrate
+python manage.py collectstatic --noinput
 echo "====================="
 
 echo "Iniciando todos os serviços..."
 echo "=============================="
 
+# Rodar Django (desenvolvimento)
 run_and_prefix "Django" python manage.py runserver 0.0.0.0:8000 &
+
+# Rodar Celery Worker
 run_and_prefix "Celery Worker" celery -A caps_bank worker -l info &
+
+# Rodar Celery Beat
 run_and_prefix "Celery Beat" celery -A caps_bank beat -l info &
 
 wait
