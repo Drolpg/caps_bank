@@ -18,7 +18,7 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Dar permissão para run.sh (opcional, para dev)
-RUN chmod +x run.sh
+# RUN chmod +x run.sh
 
 # Expor porta 8000 para Django
 EXPOSE 8000
