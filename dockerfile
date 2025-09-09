@@ -4,9 +4,9 @@ FROM python:3.12-slim
 # Diretório de trabalho
 WORKDIR /app
 
-# Dependências do sistema necessárias para psycopg2
+# Dependências do sistema necessárias para psycopg2 e netcat
 RUN apt-get update && \
-    apt-get install -y build-essential libpq-dev && \
+    apt-get install -y build-essential libpq-dev netcat && \
     rm -rf /var/lib/apt/lists/*
 
 # Copiar e instalar dependências Python
