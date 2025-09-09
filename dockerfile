@@ -1,9 +1,21 @@
-FROM python:3.12-alpine
-WORKDIR /work
-RUN apk add --no-cache gcc musl-dev linux-headers
-COPY requirements.txt requirements.txt
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Dependências do sistema
+RUN apt-get update && apt-get install -y build-essential libpq-dev && rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements e instalar
+COPY requirements.txt .
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-EXPOSE 8000
+
+# Copiar projeto
 COPY . .
+
+# Expor porta
+EXPOSE 8000
+
+# Comando de inicialização
 RUN chmod +x run.sh
 CMD ["./run.sh"]
