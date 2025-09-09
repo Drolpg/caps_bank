@@ -17,12 +17,12 @@ RUN pip install -r requirements.txt
 # Copiar todo o projeto
 COPY . .
 
-# Dar permissão para run.sh (opcional, para dev)
-# RUN chmod +x run.sh
+# Copiar entrypoint e dar permissão
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Expor porta 8000 para Django
 EXPOSE 8000
 
-# Comando padrão para produção
-# Aplica migrações, coleta estáticos e inicia Gunicorn
-CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 3"]
+# Comando padrão
+ENTRYPOINT ["/entrypoint.sh"]

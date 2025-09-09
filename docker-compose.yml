@@ -4,10 +4,6 @@ services:
   api:
     build: .
     container_name: capsbank_api
-    command: >
-      sh -c "python manage.py migrate &&
-             python manage.py collectstatic --noinput &&
-             gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 3"
     volumes:
       - .:/app
       - static_volume:/app/static
@@ -45,9 +41,9 @@ services:
     env_file:
       - .env
     depends_on:
-      - api
-      - redis
       - db
+      - redis
+      - api
 
   celery-beat:
     build: .
@@ -58,9 +54,9 @@ services:
     env_file:
       - .env
     depends_on:
-      - api
-      - redis
       - db
+      - redis
+      - api
 
   nginx:
     image: nginx:latest
