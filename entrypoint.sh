@@ -1,14 +1,10 @@
 #!/bin/sh
-set -e
 
-# Carregar variáveis do .env
-if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
-fi
-
-echo "Rodando migrações e coletando arquivos estáticos..."
-python manage.py migrate --noinput
+echo "===== Migrando banco e coletando estáticos ====="
+python manage.py makemigrations
+python manage.py migrate
 python manage.py collectstatic --noinput
+echo "================================================="
 
-echo "Iniciando Gunicorn..."
+# Inicia Gunicorn para servir Django
 exec gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 3
