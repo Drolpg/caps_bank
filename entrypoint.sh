@@ -1,25 +1,43 @@
 #!/bin/sh
 set -e
 
-# Esperar pelo banco e Redis
-echo "Aguardando PostgreSQL e Redis..."
+# Variáveis padrão (caso não estejam definidas)
+DB_HOST=${DB_HOST:-db}
+DB_PORT=${DB_PORT:-5432}
+REDIS_HOST=${REDIS_HOST:-redis}
+REDIS_PORT=${REDIS_PORT:-6379}
+
+echo "Aguardando PostgreSQL em $DB_HOST:$DB_PORT..."
 while ! nc -z $DB_HOST $DB_PORT; do
+  echo "PostgreSQL não disponível ainda, aguardando..."
   sleep 1
 done
+echo "PostgreSQL pronto!"
 
-# Rodar migrações e coletar estáticos
+echo "Aguardando Redis em $REDIS_HOST:$REDIS_PORT..."
+while ! nc -z $REDIS_HOST $REDIS_PORT; do
+  echo "Redis não disponível ainda, aguardando..."
+  sleep 1
+done
+echo "Redis pronto!"
+
+# Aplicar migrações e coletar arquivos estáticos
 echo "Aplicando migrações e coletando arquivos estáticos..."
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 
 # Iniciar serviço apropriado
-if [ "$1" = "celery" ]; then
+case "$1" in
+  celery)
     echo "Iniciando Celery Worker..."
-    celery -A caps_bank worker -l info
-elif [ "$1" = "celery-beat" ]; then
+    exec celery -A caps_bank worker -l info
+    ;;
+  celery-beat)
     echo "Iniciando Celery Beat..."
-    celery -A caps_bank beat -l info
-else
+    exec celery -A caps_bank beat -l info
+    ;;
+  *)
     echo "Iniciando Gunicorn..."
-    gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 3
-fi
+    exec gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    ;;
+esac
