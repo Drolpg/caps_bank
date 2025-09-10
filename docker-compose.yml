@@ -1,28 +1,78 @@
 version: "3.9"
 
 services:
-  api:
+  db:
+    image: postgres:15
+    container_name: capsbank_db
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - capsbank_network
+
+  redis:
+    image: redis:7
+    container_name: capsbank_redis
+    restart: always
+    networks:
+      - capsbank_network
+
+  web:
     build: .
     container_name: capsbank_api
-    env_file: .env
+    command: >
+      sh -c "
+        python manage.py migrate &&
+        python manage.py collectstatic --noinput &&
+        gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 4
+      "
+    volumes:
+      - .:/app
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     depends_on:
       - db
+      - redis
+    networks:
+      - capsbank_network
+
+  celery_worker:
+    build: .
+    container_name: capsbank_worker
+    command: celery -A caps_bank worker -l info
     volumes:
       - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+    networks:
+      - capsbank_network
 
-  db:
-    image: postgres:15
-    container_name: capsbank_db
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+  celery_beat:
+    build: .
+    container_name: capsbank_beat
+    command: celery -A caps_bank beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+    networks:
+      - capsbank_network
 
 volumes:
   postgres_data:
+
+networks:
+  capsbank_network:
+    driver: bridge

@@ -1,19 +1,32 @@
-#!/bin/bash
-# Espera o banco de dados
-echo "Aguardando banco de dados..."
+#!/bin/sh
+set -e
+
+echo "Esperando pelo banco de dados..."
 while ! nc -z $DB_HOST $DB_PORT; do
   sleep 1
 done
-echo "Banco pronto!"
 
-# Aplicar migrações
+echo "Esperando pelo Redis..."
+while ! nc -z $REDIS_HOST $REDIS_PORT; do
+  sleep 1
+done
+
+echo "Aplicando migrações..."
 python manage.py migrate --noinput
 
-# Coletar arquivos estáticos
+echo "Coletando arquivos estáticos..."
 python manage.py collectstatic --noinput
 
-# Iniciar Gunicorn
-exec gunicorn caps_bank.wsgi:application \
-    --bind 0.0.0.0:8000 \
-    --workers 3 \
-    --log-level info
+echo "Verificando superusuário..."
+python manage.py shell << EOF
+from django.contrib.auth import get_user_model
+User = get_user_model()
+if not User.objects.filter(username="${DJANGO_SUPERUSER_USERNAME}").exists():
+    User.objects.create_superuser(
+        username="${DJANGO_SUPERUSER_USERNAME}",
+        password="${DJANGO_SUPERUSER_PASSWORD}",
+        email="${DJANGO_SUPERUSER_EMAIL}"
+    )
+EOF
+
+exec "$@"
