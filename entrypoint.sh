@@ -13,7 +13,7 @@ python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 
 # Iniciar Gunicorn
-exec gunicorn capsbank.wsgi:application \
+exec gunicorn caps_bank.wsgi:application \
     --bind 0.0.0.0:8000 \
     --workers 3 \
     --log-level info
