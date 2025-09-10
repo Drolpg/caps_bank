@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Dependências do sistema necessárias para psycopg2 e netcat
 RUN apt-get update && \
-    apt-get install -y build-essential libpq-dev netcat-openbsd && \
+    apt-get install -y build-essential libpq-dev netcat-openbsd curl && \
     rm -rf /var/lib/apt/lists/*
 
 # Copiar e instalar dependências Python

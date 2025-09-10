@@ -16,6 +16,10 @@ services:
       - redis
     ports:
       - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 5s
+      retries: 10
 
   celery:
     build: .
@@ -26,9 +30,9 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - api
-      - redis
       - db
+      - redis
+      - api
 
   celery-beat:
     build: .
@@ -39,9 +43,9 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - api
-      - redis
       - db
+      - redis
+      - api
 
   db:
     image: postgres:15
@@ -69,7 +73,8 @@ services:
       - static_volume:/app/static
       - media_volume:/app/media
     depends_on:
-      - api
+      api:
+        condition: service_healthy
 
 volumes:
   postgres_data:
