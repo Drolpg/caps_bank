@@ -4,7 +4,7 @@ services:
   api:
     build: .
     container_name: capsbank_api
-    command: gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    command: ["api"]
     env_file: .env
     volumes:
       - .:/app
@@ -13,8 +13,8 @@ services:
     depends_on:
       - db
       - redis
-    expose:
-      - "8000"
+    ports:
+      - "8000:8000"
 
   celery:
     build: .
@@ -43,7 +43,6 @@ services:
   db:
     image: postgres:15
     container_name: capsbank_db
-    restart: always
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -56,21 +55,8 @@ services:
   redis:
     image: redis:7
     container_name: capsbank_redis
-    restart: always
     ports:
       - "6379:6379"
-
-  nginx:
-    image: nginx:latest
-    container_name: capsbank_nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - static_volume:/app/static
-      - media_volume:/app/media
-    depends_on:
-      - api
 
 volumes:
   postgres_data:
