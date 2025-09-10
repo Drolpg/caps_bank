@@ -24,12 +24,7 @@ services:
   web:
     build: .
     container_name: capsbank_api
-    command: >
-      sh -c "
-        python manage.py migrate &&
-        python manage.py collectstatic --noinput &&
-        gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 4
-      "
+    command: gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 4
     volumes:
       - .:/app
     env_file:
@@ -59,7 +54,7 @@ services:
   celery_beat:
     build: .
     container_name: capsbank_beat
-    command: celery -A caps_bank beat -l info
+    command: celery -A caps_bank beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - .:/app
     env_file:
