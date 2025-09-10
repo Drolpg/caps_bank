@@ -4,7 +4,7 @@ services:
   api:
     build: .
     container_name: capsbank_api
-    command: ["api"]
+    command: gunicorn capsbank.wsgi:application --bind 0.0.0.0:8000 --workers 4
     env_file: .env
     volumes:
       - .:/app
@@ -13,8 +13,8 @@ services:
     depends_on:
       - db
       - redis
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
 
   celery:
     build: .
