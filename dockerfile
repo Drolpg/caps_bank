@@ -11,18 +11,22 @@ RUN apt-get update && \
 
 # Copiar e instalar dependências Python
 COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
 
-# Copiar todo o projeto
+# Copiar todo o projeto para dentro do container
 COPY . .
 
-# Copiar entrypoint
+# Garantir permissão de execução para o entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Expor porta 8000 para Django
+# Variáveis de ambiente importantes
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Expor porta 8000
 EXPOSE 8000
 
-# Usar entrypoint para iniciar a aplicação
+# Entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
