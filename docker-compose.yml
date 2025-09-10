@@ -4,7 +4,7 @@ services:
   api:
     build: .
     container_name: capsbank_api
-    command: gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 4
+    command: gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 3
     env_file: .env
     volumes:
       - .:/app
