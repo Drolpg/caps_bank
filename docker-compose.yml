@@ -28,7 +28,6 @@ services:
       sh -c "
         python manage.py migrate &&
         python manage.py collectstatic --noinput &&
-        python manage.py shell < create_superuser.py &&
         gunicorn caps_bank.wsgi:application --bind 0.0.0.0:8000 --workers 4
       "
     volumes:
@@ -46,16 +45,12 @@ services:
   celery_worker:
     build: .
     container_name: capsbank_worker
-    command: >
-      sh -c "
-        celery -A caps_bank worker -l info --concurrency=2
-      "
+    command: celery -A caps_bank worker -l info
     volumes:
       - .:/app
     env_file:
       - .env
     depends_on:
-      - web
       - redis
       - db
     networks:
@@ -64,16 +59,12 @@ services:
   celery_beat:
     build: .
     container_name: capsbank_beat
-    command: >
-      sh -c "
-        celery -A caps_bank beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-      "
+    command: celery -A caps_bank beat -l info
     volumes:
       - .:/app
     env_file:
       - .env
     depends_on:
-      - web
       - redis
       - db
     networks:

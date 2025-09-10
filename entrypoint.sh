@@ -17,17 +17,18 @@ python manage.py migrate --noinput
 echo "Coletando arquivos estáticos..."
 python manage.py collectstatic --noinput
 
-echo "Verificando superusuário..."
-python manage.py shell << EOF
-from django.contrib.auth import get_user_model
-User = get_user_model()
-if not User.objects.filter(username="${DJANGO_SUPERUSER_USERNAME}").exists():
-    User.objects.create_superuser(
-        username="${DJANGO_SUPERUSER_USERNAME}",
-        password="${DJANGO_SUPERUSER_PASSWORD}",
-        email="${DJANGO_SUPERUSER_EMAIL}",
-        cpf="${DJANGO_SUPERUSER_CPF}"
-    )
-EOF
+# Remove a criação do superusuário
+# echo "Verificando superusuário..."
+# python manage.py shell << EOF
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
+# if not User.objects.filter(username="${DJANGO_SUPERUSER_USERNAME}").exists():
+#     User.objects.create_superuser(
+#         username="${DJANGO_SUPERUSER_USERNAME}",
+#         password="${DJANGO_SUPERUSER_PASSWORD}",
+#         email="${DJANGO_SUPERUSER_EMAIL}",
+#         cpf="${DJANGO_SUPERUSER_CPF}"
+#     )
+# EOF
 
 exec "$@"

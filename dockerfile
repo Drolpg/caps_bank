@@ -1,25 +1,23 @@
-FROM python:3.11-slim
+# Base image
+FROM python:3.12-slim
 
-# Configurações
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
-
+# Diretório de trabalho
 WORKDIR /app
 
-# Dependências do sistema
-RUN apt-get update && apt-get install -y \
-    gcc libpq-dev curl netcat-openbsd \
-    && rm -rf /var/lib/apt/lists/*
+# Dependências do sistema necessárias
+RUN apt-get update && \
+    apt-get install -y build-essential libpq-dev netcat-openbsd curl && \
+    rm -rf /var/lib/apt/lists/*
 
-# Instalar dependências do projeto
+# Copiar e instalar dependências Python
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copiar o código
+# Copiar todo o projeto
 COPY . .
 
-# Script de inicialização
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Expor porta 8000
+EXPOSE 8000
 
-ENTRYPOINT ["/entrypoint.sh"]
+# Comando padrão (definido no docker-compose)
+CMD ["gunicorn", "caps_bank.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]
