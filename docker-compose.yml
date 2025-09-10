@@ -4,9 +4,8 @@ services:
   api:
     build: .
     container_name: capsbank_api
-    command: "api"
-    env_file:
-      - .env
+    command: ["api"]
+    env_file: .env
     volumes:
       - .:/app
       - static_volume:/app/static
@@ -16,17 +15,12 @@ services:
       - redis
     ports:
       - "8000:8000"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
-      interval: 5s
-      retries: 10
 
   celery:
     build: .
     container_name: capsbank_celery
-    command: "celery"
-    env_file:
-      - .env
+    command: ["celery"]
+    env_file: .env
     volumes:
       - .:/app
     depends_on:
@@ -37,9 +31,8 @@ services:
   celery-beat:
     build: .
     container_name: capsbank_celery_beat
-    command: "celery-beat"
-    env_file:
-      - .env
+    command: ["celery-beat"]
+    env_file: .env
     volumes:
       - .:/app
     depends_on:
@@ -52,16 +45,20 @@ services:
     container_name: capsbank_db
     restart: always
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   redis:
     image: redis:7
     container_name: capsbank_redis
     restart: always
+    ports:
+      - "6379:6379"
 
   nginx:
     image: nginx:latest
@@ -73,8 +70,7 @@ services:
       - static_volume:/app/static
       - media_volume:/app/media
     depends_on:
-      api:
-        condition: service_healthy
+      - api
 
 volumes:
   postgres_data:
