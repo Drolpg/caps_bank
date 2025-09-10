@@ -3,7 +3,11 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Instala dependências do sistema
-RUN apt-get update && apt-get install -y netcat gcc libpq-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    netcat-openbsd \
+    gcc \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copia requirements
 COPY requirements.txt .
