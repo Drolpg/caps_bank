@@ -25,7 +25,8 @@ if not User.objects.filter(username="${DJANGO_SUPERUSER_USERNAME}").exists():
     User.objects.create_superuser(
         username="${DJANGO_SUPERUSER_USERNAME}",
         password="${DJANGO_SUPERUSER_PASSWORD}",
-        email="${DJANGO_SUPERUSER_EMAIL}"
+        email="${DJANGO_SUPERUSER_EMAIL}",
+        cpf="${DJANGO_SUPERUSER_CPF}"
     )
 EOF
 
