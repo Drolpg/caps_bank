@@ -22,4 +22,5 @@ ENV PYTHONDONTWRITEBYTECODE=1
 EXPOSE 8000
 
 # Entrypoint
-ENTRYPOINT ["./entrypoint.sh"]
+# ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./run.sh"]
